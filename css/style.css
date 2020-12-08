@@ -1,10 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Texturina&display=swap');
+
+
 body {
   background: #ddd;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  font-family: 'Texturina', serif;
 }
+
 
 .row {
   display: flex;
@@ -45,4 +50,26 @@ body {
 
 .targetCell {
   background-color: green;
+}
+
+h1{
+font-weight: 700;
+}
+
+.winDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+button {
+  font-size: 1em;
+  background-color: #448C34;
+  font-family: 'Texturina', serif;
+  font-weight: bold;
+  border: 0;
+  color: white;
+  padding: 0.5em 1em;
+  text-align: center;
+  border-radius: 4px;
 }

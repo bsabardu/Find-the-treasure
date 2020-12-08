@@ -163,7 +163,7 @@ var app = {
         app.player.y++
         break;
     };
-    app.nbMove++;
+    app.nbMove++; 
     app.redrawBoard();
   }
 },
@@ -172,17 +172,24 @@ isGameOver: function(){
   if(app.player.x === app.targetCell.x && app.player.y === app.targetCell.y){
     app.isGameOver = true;
     app.clearBoard();
+    var winDiv = document.createElement("div");
+    winDiv.classList.add("winDiv")
     var winMessage = document.createElement("h1");
     winMessage.textContent = `Bravo vous avez gagné en ${app.nbMove} déplacement(s) !`;
     var replayButton = document.createElement("button");
     replayButton.textContent = "Rejouer"
-    app.htmlElements.board.appendChild(winMessage);
-  /*   app.htmlElements.board.appendChild(replayButton);
+    app.htmlElements.board.appendChild(winDiv);
+    winDiv.appendChild(winMessage);
+    winDiv.appendChild(replayButton);
 
     replayButton.addEventListener("click", function(){
       app.isGameOver = false;
+      app.player.x = 0;
+      app.player.y = 0;
+      app.player.direction = "right";
+      winDiv.innerHTML="";
       app.drawBoard();
-    }); */
+    });
   }
 },
 
