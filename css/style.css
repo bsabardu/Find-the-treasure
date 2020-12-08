@@ -20,30 +20,25 @@ body {
 
 
 .player {
-  width: 0;
-  height: 0;
-  border-style: solid;
-  margin: 20px;
+  width: 70px;
+  height: 70px;
+  background: url(/img/sprite.png) no-repeat;
+  background-size: 100%;
 }
 .player--right{
-  border-width: 15px 0 15px 35px; /* right */ 
-  border-color: transparent transparent transparent blue;
+  background-position: 0 -160px;
 }
 
 .player--down {
-  border-width: 35px 15px 0 15px; /* down */
-  border-color: blue transparent transparent transparent;
+  background-position: 0 0;
 }
 
 .player--left{
-  border-width: 15px 35px 15px 0; /* left */
-  border-color: transparent blue transparent transparent;
+  background-position: 0 -80px;
 }
 
 .player--up{
-  border-width: 0 15px 35px 15px; /* up */
-  border-color: transparent transparent blue transparent;
-
+  background-position: 0 -240px;
 }
 
 
