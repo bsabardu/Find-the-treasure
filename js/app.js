@@ -54,6 +54,11 @@ var app = {
     }
   },
 
+  clearBoard: function(){
+    var board = document.querySelector("#board");
+    board.innerHTML = "";
+  },
+
   init: function () {
     app.drawBoard();
   }
