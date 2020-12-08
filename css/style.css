@@ -27,7 +27,7 @@ body {
 .player {
   width: 70px;
   height: 70px;
-  background: url(/img/sprite.png) no-repeat;
+  background: url(img/sprite.png) no-repeat;
   background-size: 100%;
 }
 .player--right{
