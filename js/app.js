@@ -36,7 +36,6 @@ var app = {
           app.moveForward();
           break;
       };
-      app.nbMove++;
     },
     
   listenKeyBoardEvents: function () {
@@ -121,6 +120,7 @@ var app = {
         app.player.direction = "right";
         break;
     };
+    app.nbMove++;
     app.redrawBoard();
   }
 },
@@ -141,7 +141,8 @@ var app = {
       case "down":
         app.player.direction = "left";
         break;
-    }
+    };
+    app.nbMove++;
     app.redrawBoard();
   }
 },
@@ -162,6 +163,7 @@ var app = {
         app.player.y++
         break;
     };
+    app.nbMove++;
     app.redrawBoard();
   }
 },
