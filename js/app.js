@@ -88,7 +88,6 @@ var app = {
         };
       };
     };
-    app.isGameOver()
   },
 
   clearBoard: function () {
@@ -99,6 +98,8 @@ var app = {
   redrawBoard: function () {
     app.clearBoard();
     app.drawBoard();
+    app.isGameOver()
+
   },
 
   turnLeft: function () {
@@ -151,17 +152,25 @@ var app = {
     if(!app.gameOver){
     switch (app.player.direction) {
       case "right":
+        if(app.player.x < app.boardColumns -1){
         app.player.x++;
+      }
         break;
       case "up":
+        if(app.player.y > 0){
         app.player.y--;
+      }
         break;
       case "left":
+        if(app.player.x > 0){
         app.player.x--;
+      }
         break;
       case "down":
+        if(app.player.y < app.boardRows -1){
         app.player.y++
         break;
+        }
     };
     app.nbMove++; 
     app.redrawBoard();
