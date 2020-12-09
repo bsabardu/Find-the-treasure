@@ -29,13 +29,13 @@ const app = {
     document.addEventListener("keyup", (e) => {
       switch (e.code) {
         case "ArrowLeft":
-          app.turnLeft();
+          app.move.turnLeft();
           break;
         case "ArrowRight":
-          app.turnRight();
+          app.move.turnRight();
           break;
         case "ArrowUp":
-          app.moveForward();
+          app.move.moveForward();
           break;
       };
     });
@@ -100,82 +100,87 @@ const app = {
 
   },
 
-  turnLeft() {
-    if (app.gameOver) {
-      return;
-    }
-    switch (app.player.direction) {
-      case "right":
-        app.player.direction = "up";
-        break;
-      case "up":
-        app.player.direction = "left";
-        break;
-      case "left":
-        app.player.direction = "down";
-        break;
-      case "down":
-        app.player.direction = "right";
-        break;
-    };
-    app.nbMove++;
-    app.redrawBoard();
-  },
+  move: {
 
-  turnRight() {
-    if (app.gameOver) {
-      return;
-    }
-
-    var playerDiv = document.querySelector(".player")
-    switch (app.player.direction) {
-      case "right":
-        app.player.direction = "down";
-        break;
-      case "up":
-        app.player.direction = "right";
-        break;
-      case "left":
-        app.player.direction = "up";
-        break;
-      case "down":
-        app.player.direction = "left";
-        break;
-    };
-    app.nbMove++;
-    app.redrawBoard();
-  },
-
-  moveForward() {
-    if (app.gameOver) {
-      return;
-    }
-
-    switch (app.player.direction) {
-      case "right":
-        if (app.player.x < app.boardColumns - 1) {
-          app.player.x++;
-        }
-        break;
-      case "up":
-        if (app.player.y > 0) {
-          app.player.y--;
-        }
-        break;
-      case "left":
-        if (app.player.x > 0) {
-          app.player.x--;
-        }
-        break;
-      case "down":
-        if (app.player.y < app.boardRows - 1) {
-          app.player.y++
+    turnLeft() {
+      if (app.gameOver) {
+        return;
+      }
+      switch (app.player.direction) {
+        case "right":
+          app.player.direction = "up";
           break;
-        }
-    };
-    app.nbMove++;
-    app.redrawBoard();
+        case "up":
+          app.player.direction = "left";
+          break;
+        case "left":
+          app.player.direction = "down";
+          break;
+        case "down":
+          app.player.direction = "right";
+          break;
+      };
+      app.nbMove++;
+      app.redrawBoard();
+    },
+
+    turnRight() {
+      if (app.gameOver) {
+        return;
+      }
+
+      var playerDiv = document.querySelector(".player")
+      switch (app.player.direction) {
+        case "right":
+          app.player.direction = "down";
+          break;
+        case "up":
+          app.player.direction = "right";
+          break;
+        case "left":
+          app.player.direction = "up";
+          break;
+        case "down":
+          app.player.direction = "left";
+          break;
+      };
+      app.nbMove++;
+      app.redrawBoard();
+    },
+
+    moveForward() {
+      if (app.gameOver) {
+        return;
+      }
+
+      switch (app.player.direction) {
+        case "right":
+          if (app.player.x < app.boardColumns - 1) {
+            app.player.x++;
+          }
+          break;
+        case "up":
+          if (app.player.y > 0) {
+            app.player.y--;
+          }
+          break;
+        case "left":
+          if (app.player.x > 0) {
+            app.player.x--;
+          }
+          break;
+        case "down":
+          if (app.player.y < app.boardRows - 1) {
+            app.player.y++
+            break;
+          }
+      };
+      app.nbMove++;
+      app.redrawBoard();
+    },
+
   },
+
 
   createWinDiv() {
     app.htmlElements.winDiv = document.createElement("div");
@@ -209,7 +214,7 @@ const app = {
     app.nbMove = 0;
     app.htmlElements.winDiv.remove();
     app.clearBoard();
-    app.drawBoard();
+    app.newGame()
   },
 
   isGameOver() {
@@ -220,8 +225,49 @@ const app = {
     }
   },
 
-  init: function () {
+  randomGame() {
+
+    function getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+    }
+
+    //Size of the board
+    app.boardRows = getRandomInt(1, 60);
+    app.boardColumns = getRandomInt(1, 60);
+
+    //Player Coordinates
+    app.player.x = getRandomInt(1, app.boardColumns);
+    app.player.y = getRandomInt(1, app.boardRows);
+
+    //Player Coordinates
+    app.targetCell.x = getRandomInt(1, app.boardColumns);
+    app.targetCell.y = getRandomInt(1, app.boardRows);
+
+
+  },
+
+  adaptBoard(){
+    if(app.boardColumns > 25 || app.boardRows > 25){
+      app.htmlElements.board.style.transform = "scale(0.5)";
+    } 
+    else if(app.boardColumns > 8 || app.boardRows > 8){
+      app.htmlElements.board.style.transform = "scale(1)";
+    } 
+    else {
+      app.htmlElements.board.style.transform = "scale(2)";
+    }
+  },
+
+  newGame() {
+    app.randomGame();
     app.drawBoard();
+    app.adaptBoard();
+  },
+
+  init: function () {
+    app.newGame();
     app.listenKeyBoardEvents();
   },
 };
