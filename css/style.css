@@ -20,39 +20,50 @@ body {
 .box {
   width: 70px;
   height: 70px;
-  border: 1px solid black;
+}
+
+.herb {
+  background: url(../img/mountain_landscape.png);
+  background-position: 70px -144px;
+  background-size: 820%;
+}
+
+.trail {
+  background: url(../img/mountain_landscape.png);
+  background-position: 70px -217px;
+  background-size: 820%;
 }
 
 
 .player {
-  width: 70px;
-  height: 70px;
-  background: url("../img/sprite.png") no-repeat;
-  background-size: 100%;
+  background: url("../img/sprite.png") no-repeat, url("../img/mountain_landscape.png") ;
+  background-size: 100%, 820%;
+  background-position: 0 -160px, 70px -144px;
 }
+
 .player--right{
-  background-position: 0 -160px;
+  background-position: 0 -160px, 70px -144px;
 }
 
 .player--down {
-  background-position: 0 0;
+  background-position: 0 0, 70px -144px;
 }
 
 .player--left{
-  background-position: 0 -80px;
+  background-position: 0 -80px, 70px -144px;
 }
 
 .player--up{
-  background-position: 0 -240px;
+  background-position: 0 -240px, 70px -144px;
 }
-
 
 
 .targetCell {
   width: 70px;
   height: 70px;
-  background: url("../img/chest2.png") no-repeat;
-  background-size: 200%;
+  background: url("../img/chest2.png") no-repeat, url("../img/mountain_landscape.png") ;
+  background-size: 200%, 820%;
+  background-position: 0 0, 70px -144px;
 }
 
 h1{

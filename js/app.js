@@ -7,6 +7,7 @@ const app = {
   //Objet html Elements
   htmlElements: {
     board: document.querySelector("#board"),
+    winDiv: null,
   },
 
   //objet joueur
@@ -24,22 +25,20 @@ const app = {
   },
 
   //Events Handlers
-    keyUpHandler: function (e) {
-      switch (e.keyCode) {
-        case 37:
+  listenKeyBoardEvents: function () {
+    document.addEventListener("keyup", (e) => {
+      switch (e.code) {
+        case "ArrowLeft":
           app.turnLeft();
           break;
-        case 39:
+        case "ArrowRight":
           app.turnRight();
           break;
-        case 38:
+        case "ArrowUp":
           app.moveForward();
           break;
       };
-    },
-    
-  listenKeyBoardEvents: function () {
-    document.addEventListener("keyup", app.keyUpHandler);
+    });
   },
 
 
@@ -58,7 +57,7 @@ const app = {
 
         let box = document.createElement("div");
         let row = document.getElementsByClassName("row")[y]
-        box.classList.add("box");
+        box.classList.add("box", "herb");
         row.appendChild(box);
 
         //On colorise si case du trésor
@@ -102,7 +101,9 @@ const app = {
   },
 
   turnLeft() {
-    if(!app.gameOver){
+    if (app.gameOver) {
+      return;
+    }
     switch (app.player.direction) {
       case "right":
         app.player.direction = "up";
@@ -119,11 +120,13 @@ const app = {
     };
     app.nbMove++;
     app.redrawBoard();
-  }
-},
+  },
 
   turnRight() {
-    if(!app.gameOver){
+    if (app.gameOver) {
+      return;
+    }
+
     var playerDiv = document.querySelector(".player")
     switch (app.player.direction) {
       case "right":
@@ -141,62 +144,81 @@ const app = {
     };
     app.nbMove++;
     app.redrawBoard();
-  }
-},
+  },
 
   moveForward() {
-    if(!app.gameOver){
+    if (app.gameOver) {
+      return;
+    }
+
     switch (app.player.direction) {
       case "right":
-        if(app.player.x < app.boardColumns -1){
-        app.player.x++;
-      }
+        if (app.player.x < app.boardColumns - 1) {
+          app.player.x++;
+        }
         break;
       case "up":
-        if(app.player.y > 0){
-        app.player.y--;
-      }
+        if (app.player.y > 0) {
+          app.player.y--;
+        }
         break;
       case "left":
-        if(app.player.x > 0){
-        app.player.x--;
-      }
+        if (app.player.x > 0) {
+          app.player.x--;
+        }
         break;
       case "down":
-        if(app.player.y < app.boardRows -1){
-        app.player.y++
-        break;
+        if (app.player.y < app.boardRows - 1) {
+          app.player.y++
+          break;
         }
     };
-    app.nbMove++; 
+    app.nbMove++;
     app.redrawBoard();
-  }
-},
+  },
 
-isGameOver(){
-  if(app.player.x === app.targetCell.x && app.player.y === app.targetCell.y){
-    app.isGameOver = true;
-    app.clearBoard();
-    var winDiv = document.createElement("div");
-    winDiv.classList.add("winDiv")
+  createWinDiv() {
+    app.htmlElements.winDiv = document.createElement("div");
+    app.htmlElements.winDiv.classList.add("winDiv")
     var winMessage = document.createElement("h1");
     winMessage.textContent = `Bravo vous avez gagné en ${app.nbMove} déplacement(s) !`;
     var replayButton = document.createElement("button");
     replayButton.textContent = "Rejouer"
-    app.htmlElements.board.appendChild(winDiv);
-    winDiv.appendChild(winMessage);
-    winDiv.appendChild(replayButton);
+    replayButton.type = "submit"
+    app.htmlElements.board.appendChild(app.htmlElements.winDiv);
+    app.htmlElements.winDiv.appendChild(winMessage);
+    app.htmlElements.winDiv.appendChild(replayButton);
 
-    replayButton.addEventListener("click", function(){
-      app.isGameOver = false;
-      app.player.x = 0;
-      app.player.y = 0;
-      app.player.direction = "right";
-      winDiv.innerHTML="";
-      app.drawBoard();
+    document.addEventListener("keyup", (e) => {
+      if (e.code === "Enter" && app.gameOver) {
+        app.resetGame();
+      }
+    })
+
+    replayButton.addEventListener("click", () => {
+      console.log("Click ?");
+      app.resetGame();
     });
-  }
-},
+  },
+
+  resetGame() {
+    app.gameOver = false;
+    app.player.x = 0;
+    app.player.y = 0;
+    app.player.direction = "right";
+    app.nbMove = 0;
+    app.htmlElements.winDiv.remove();
+    app.clearBoard();
+    app.drawBoard();
+  },
+
+  isGameOver() {
+    if (app.player.x === app.targetCell.x && app.player.y === app.targetCell.y) {
+      app.gameOver = true;
+      app.clearBoard();
+      app.createWinDiv();
+    }
+  },
 
   init: function () {
     app.drawBoard();
