@@ -1,4 +1,4 @@
-var app = {
+const app = {
   boardColumns: 6,
   boardRows: 4,
   gameOver: false,
@@ -44,21 +44,21 @@ var app = {
 
 
   //methods
-  createRow: function () {
+  createRow() {
     var row = document.createElement("div");
     row.classList.add("row");
     app.htmlElements.board.appendChild(row);
   },
 
-  drawBoard: function () {
+  drawBoard() {
     //Double boucle pour créer le board (first x Row then x box per row)
-    for (var y = 0; y < app.boardRows; y++) {
+    for (let y = 0; y < app.boardRows; y++) {
       app.createRow();
-      for (var x = 0; x < app.boardColumns; x++) {
+      for (let x = 0; x < app.boardColumns; x++) {
 
-        var box = document.createElement("div");
-        var row = document.getElementsByClassName("row")[y]
-        box.classList.add("box", );
+        let box = document.createElement("div");
+        let row = document.getElementsByClassName("row")[y]
+        box.classList.add("box");
         row.appendChild(box);
 
         //On colorise si case du trésor
@@ -90,32 +90,28 @@ var app = {
     };
   },
 
-  clearBoard: function () {
-    var board = document.querySelector("#board");
-    board.innerHTML = "";
+  clearBoard() {
+    app.htmlElements.board.innerHTML = "";
   },
 
-  redrawBoard: function () {
+  redrawBoard() {
     app.clearBoard();
     app.drawBoard();
     app.isGameOver()
 
   },
 
-  turnLeft: function () {
+  turnLeft() {
     if(!app.gameOver){
-    var playerDiv = document.querySelector(".player");
     switch (app.player.direction) {
       case "right":
         app.player.direction = "up";
         break;
       case "up":
         app.player.direction = "left";
-
         break;
       case "left":
         app.player.direction = "down";
-
         break;
       case "down":
         app.player.direction = "right";
@@ -126,7 +122,7 @@ var app = {
   }
 },
 
-  turnRight: function () {
+  turnRight() {
     if(!app.gameOver){
     var playerDiv = document.querySelector(".player")
     switch (app.player.direction) {
@@ -148,7 +144,7 @@ var app = {
   }
 },
 
-  moveForward: function () {
+  moveForward() {
     if(!app.gameOver){
     switch (app.player.direction) {
       case "right":
@@ -177,7 +173,7 @@ var app = {
   }
 },
 
-isGameOver: function(){
+isGameOver(){
   if(app.player.x === app.targetCell.x && app.player.y === app.targetCell.y){
     app.isGameOver = true;
     app.clearBoard();

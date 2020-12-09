@@ -49,7 +49,10 @@ body {
 
 
 .targetCell {
-  background-color: green;
+  width: 70px;
+  height: 70px;
+  background: url("../img/chest2.png") no-repeat;
+  background-size: 200%;
 }
 
 h1{
