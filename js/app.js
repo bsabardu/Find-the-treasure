@@ -61,12 +61,12 @@ const app = {
         row.appendChild(box);
 
         //On colorise si case du trésor
-        if (x === app.targetCell.x && app.targetCell.y === y) {
+        if (x + 1 === app.targetCell.x && app.targetCell.y === y + 1) {
           box.classList.add("targetCell");
         };
 
         //On ajoute le joueur case du joueur
-        if (x === app.player.x && app.player.y === y) {
+        if (x + 1 === app.player.x && app.player.y === y + 1) {
           box.classList.add("player");
           switch (app.player.direction) {
             case "right":
@@ -234,8 +234,8 @@ const app = {
     }
 
     //Size of the board
-    app.boardRows = getRandomInt(1, 60);
-    app.boardColumns = getRandomInt(1, 60);
+    app.boardRows = getRandomInt(1, 15);
+    app.boardColumns = getRandomInt(1, 15);
 
     //Player Coordinates
     app.player.x = getRandomInt(1, app.boardColumns);
@@ -248,25 +248,13 @@ const app = {
 
   },
 
-  adaptBoard(){
-    if(app.boardColumns > 25 || app.boardRows > 25){
-      app.htmlElements.board.style.transform = "scale(0.5)";
-    } 
-    else if(app.boardColumns > 8 || app.boardRows > 8){
-      app.htmlElements.board.style.transform = "scale(1)";
-    } 
-    else {
-      app.htmlElements.board.style.transform = "scale(2)";
-    }
-  },
 
   newGame() {
     app.randomGame();
     app.drawBoard();
-    app.adaptBoard();
   },
 
-  init: function () {
+  init() {
     app.newGame();
     app.listenKeyBoardEvents();
   },
